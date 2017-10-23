@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Locker</h1>
+
+<div class="row">
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ path('locker_index') }}">Back to the list</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <table class="table table-striped table-bordered">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ locker.id }}</td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>{{ locker.number }}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{ locker.location }}</td>
+        </tr>
+        <tr>
+            <th>Site</th>
+            <td>{{ locker.site }}</td>
+        </tr>
+        <tr>
+            <th>Numberkey</th>
+            <td>{{ locker.numberKey }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger align-center">
+            {{ form_end(delete_form) }}
+        </div>
+
+        <div class="col-md-3">
+            <a href="{{ path('locker_edit', { 'id': locker.id }) }}" class="btn btn-warning align-center">Edit</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="col-md-12">
+
+    <h1>Lockers list</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{{ path('locker_new') }}">Create a new locker</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Location</th>
+            <th>Site</th>
+            <th>Numberkey</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for locker in lockers %}
+            <tr>
+                <td><a href="{{ path('locker_show', { 'id': locker.id }) }}">{{ locker.id }}</a></td>
+                <td>{{ locker.number }}</td>
+                <td>{{ locker.location }}</td>
+                <td>{{ locker.site }}</td>
+                <td>{{ locker.numberKey }}</td>
+                <td>
+                    <a href="{{ path('locker_show', { 'id': locker.id }) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('locker_edit', { 'id': locker.id }) }}" class="btn btn-warning">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
