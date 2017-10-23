@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Locker</h1>
-
 <div class="row">
     <ul class="breadcrumb">
         <li>
@@ -11,6 +9,7 @@
     </ul>
 </div>
 
+<h1>Locker</h1>
 
 <div class="row">
     <table class="table table-striped table-bordered">
@@ -39,6 +38,7 @@
     </table>
 </div>
 
+{% if is_granted('ROLE_ADMIN') %}
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-3">
@@ -52,5 +52,6 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 {% endblock %}
