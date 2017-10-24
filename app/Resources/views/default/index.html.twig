@@ -8,7 +8,7 @@
             <h1>Lockers actions</h1>
 
             <div class="col-md-4">
-                <a href="{{ path('paginate') }}" class="btn btn-info">Show all</a>
+                <a href="{{ path('paginate', {'page': 1}) }}" class="btn btn-info">Show all</a>
             </div>
 
             {% if is_granted('ROLE_ADMIN') %}
