@@ -16,6 +16,44 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class LockerController extends Controller
 {
+
+    /**
+     * Lists all locker entities.
+     * @Route("/page/{page}", name="paginate" )
+     * @Method("GET")
+     */
+    public function lockerPaginationAction($page)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        if ($page < 1) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        // Ici je fixe le nombre d'annonces par page à 3
+        // Mais bien sûr il faudrait utiliser un paramètre, et y accéder via $this->container->getParameter('nb_per_page')
+        $nbPerPage = 30;
+
+        // On récupère notre objet Paginator
+        $lockers = $em->getRepository('AllocatorBundle:Locker')->findAllPagine($page, $nbPerPage);
+
+        // On calcule le nombre total de pages grâce au count($lockers) qui retourne le nombre total d'annonces
+        $nbPages = ceil(count($lockers) / $nbPerPage);
+
+        // Si la page n'existe pas, on retourne une 404
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        }
+
+        // On donne toutes les informations nécessaires à la vue
+        return $this->render('locker/indexPaginate.html.twig', array(
+            'lockers' => $lockers,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+        ));
+    }
+
     /**
      * Lists all locker entities.
      *
@@ -24,13 +62,17 @@ class LockerController extends Controller
      */
     public function indexAction()
     {
+        return $this->redirectToRoute('paginate', array('page' => 1));
+
         $em = $this->getDoctrine()->getManager();
 
+        /*
         $lockers = $em->getRepository('AllocatorBundle:Locker')->findAll();
 
         return $this->render('locker/index.html.twig', array(
             'lockers' => $lockers,
         ));
+        */
     }
 
     /**

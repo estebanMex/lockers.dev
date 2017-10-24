@@ -2,6 +2,10 @@
 
 namespace AllocatorBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
  * LockerRepository
  *
@@ -10,4 +14,35 @@ namespace AllocatorBundle\Repository;
  */
 class LockerRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * Récupère une liste des lockers paginés.
+     *
+     * @param int $page Le numéro de la page
+     * @param int $nbMaxParPage Nombre maximum de lockers par page
+     *
+     * @throws InvalidArgumentException
+     * @throws NotFoundHttpException
+     *
+     * @return Paginator
+     */
+    public function findAllPagine($page, $nbMaxParPage)
+    {
+        $query = $this->createQueryBuilder('l')
+            ->orderBy('l.id', 'ASC')
+            ->getQuery()
+        ;
+
+        $query
+            // On définit l'annonce à partir de laquelle commencer la liste
+            ->setFirstResult(($page-1) * $nbMaxParPage)
+            // Ainsi que le nombre d'annonce à afficher sur une page
+            ->setMaxResults($nbMaxParPage)
+        ;
+
+        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+        // (n'oubliez pas le use correspondant en début de fichier)
+        return new Paginator($query, true);
+    }
+
 }
