@@ -3,12 +3,16 @@
 namespace AllocatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Locker
  *
  * @ORM\Table(name="locker")
  * @ORM\Entity(repositoryClass="AllocatorBundle\Repository\LockerRepository")
+ * @UniqueEntity("user")
  */
 class Locker
 {
